@@ -7,10 +7,7 @@ import com.trade.app.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,6 +27,15 @@ public class AuthController {
         AuthResponse response = authService.login(loginDTO);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/two-factor-otp/{otp}")
+    public ResponseEntity<AuthResponse> verifySingInOtp(@PathVariable String otp, @RequestParam String id) throws Exception {
+        AuthResponse authResponse = authService.verifySigninOtp(otp,id);
+        return ResponseEntity.ok(authResponse);
+
+    }
+
+
 
 
 }

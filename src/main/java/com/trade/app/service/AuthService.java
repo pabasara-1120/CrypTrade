@@ -8,6 +8,7 @@ public interface AuthService {
 
     AuthResponse register(UserDTO userDTO) throws Exception;
     AuthResponse login(LoginDTO userDTO) throws Exception;
+    AuthResponse verifySigninOtp(String otp, String id) throws Exception;
 
 
 }
