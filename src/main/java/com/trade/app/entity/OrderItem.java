@@ -29,6 +29,7 @@ public class OrderItem {
 
     @JsonIgnore
     @OneToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "orderId")
     private Order order;
 
 
