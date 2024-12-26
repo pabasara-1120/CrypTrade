@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 public class CoinServiceImpl implements CoinService {
 
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private CoinRepository coinRepository;
@@ -47,7 +47,7 @@ public class CoinServiceImpl implements CoinService {
 
     @Override
     public String getMarketChart(String coinId, int days) throws Exception {
-        String url = "https://api.coingecko.com/api/v3/coins/"+coinId+ "markets_chart?vs_currency=usd&days="+days;
+        String url = "https://api.coingecko.com/api/v3/coins/"+coinId+ "/market_chart?vs_currency=usd&days="+days;
         RestTemplate restTemplate = new RestTemplate();
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -80,11 +80,11 @@ public class CoinServiceImpl implements CoinService {
             coin.setMarketCap(marketData.get("market_cap").get("usd").asLong());
             coin.setMarketCapRank(marketData.get("market_cap_rank").asInt());
             coin.setTotalVolume(marketData.get("total_volume").get("usd").asInt());
-            coin.setHigh24h(marketData.get("high_24").get("usd").asDouble());
-            coin.setLow24h(marketData.get("low_24").get("usd").asDouble());
-            coin.setPriceChange24h(marketData.get("price_change_24").get("usd").asDouble());
-            coin.setPriceChangePercentage24h(marketData.get("market_cap_change_percentage_24").get("usd").asDouble());
-            coin.setTotalSupply(marketData.get("total_supply").get("usd").asLong());
+            coin.setHigh24h(marketData.get("high_24h").get("usd").asDouble());
+            coin.setLow24h(marketData.get("low_24h").get("usd").asDouble());
+            coin.setPriceChange24h(marketData.get("price_change_24h").asDouble());
+          coin.setPriceChangePercentage24h(marketData.get("price_change_percentage_24h").asDouble());
+            coin.setTotalSupply(marketData.get("total_supply").asLong());
 
             coinRepository.save(coin);
 
@@ -129,7 +129,7 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public String getTradingCoins() throws Exception {
         try {
-            String url = "https://api.coingecko.com/api/v3/search/trading";
+            String url = "https://api.coingecko.com/api/v3/search/trending";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders httpHeaders = new HttpHeaders();
             HttpEntity<String> entity = new HttpEntity<String>("parameters", httpHeaders);

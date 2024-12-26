@@ -1,5 +1,6 @@
 package com.trade.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -74,7 +76,7 @@ public class Coin {
     private double athChangePercentage;
 
     @JsonProperty("ath_date")
-    private LocalDateTime athDate;
+    private Date athDate;
 
     @JsonProperty("atl")
     private double atl;
@@ -83,14 +85,14 @@ public class Coin {
     private double atlChangePercentage;
 
     @JsonProperty("atl_date")
-    private LocalDateTime atlDate;
+    private Date atlDate;
 
     @JsonProperty("roi")
     @JsonIgnore
     private String roi;
 
     @JsonProperty("last_updated")
-    private LocalDateTime lastUpdated;
+    private Date lastUpdated;
 
 
 }
