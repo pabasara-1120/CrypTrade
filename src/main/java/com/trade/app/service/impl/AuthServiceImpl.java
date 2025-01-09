@@ -52,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
 
         User savedUser = userRepository.save(user);
+
         Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwt = JwtProvider.generateToken(auth);
