@@ -31,7 +31,7 @@ public class CoinServiceImpl implements CoinService {
 
     @Override
     public List<Coin> getCoinList(int page) {
-        String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=10page="+page;
+        String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page="+page;
         RestTemplate restTemplate = new RestTemplate();
         try{
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -62,7 +62,7 @@ public class CoinServiceImpl implements CoinService {
     }
 
     @Override
-    public String coinDetails(String coinId) throws Exception {
+    public String coinDetails(String coinId) throws Exception { //should we add the whole coinlist to db???
         String url = "https://api.coingecko.com/api/v3/coins/"+coinId;
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -83,7 +83,7 @@ public class CoinServiceImpl implements CoinService {
             coin.setHigh24h(marketData.get("high_24h").get("usd").asDouble());
             coin.setLow24h(marketData.get("low_24h").get("usd").asDouble());
             coin.setPriceChange24h(marketData.get("price_change_24h").asDouble());
-          coin.setPriceChangePercentage24h(marketData.get("price_change_percentage_24h").asDouble());
+            coin.setPriceChangePercentage24h(marketData.get("price_change_percentage_24h").asDouble());
             coin.setTotalSupply(marketData.get("total_supply").asLong());
 
             coinRepository.save(coin);
@@ -115,7 +115,7 @@ public class CoinServiceImpl implements CoinService {
     @Override
     public String getTop50Coins() throws Exception {
         try {
-            String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=10page=1";
+            String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=10";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders httpHeaders = new HttpHeaders();
             HttpEntity<String> entity = new HttpEntity<String>("parameters", httpHeaders);
